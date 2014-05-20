@@ -1,0 +1,98 @@
+body {
+background-color:#FD7;
+}
+
+#main {
+  margin-top:10px;
+}
+
+table {
+  margin:20px auto 0;
+  border-collapse:separate
+}
+
+td {
+  height:100px;
+  width:100px;
+  font:10px;
+  border:1px solid #FD7;
+  padding:1px;
+  background-color:#B73;
+  color:#fff;
+  font-size:30px;
+}
+
+td:hover {
+  background-color:#A62;
+  border-color:yellow;
+}
+
+.menu-btn {
+margin-top:15px;
+}
+
+#marker-select {
+margin-top:10px;
+font-size:25px;
+}
+
+.marker {
+cursor:pointer;
+}
+
+.marker.active {
+font-weight:600;
+color: #FA0;
+text-decoration: underline;
+cursor:auto;
+}
+
+.modal {
+  position:absolute;
+  height:160px;
+  width:350px;
+  left:50%;
+  top:200px;
+  margin:-70px 0 0 -175px;
+  background-color:white;
+  overflow:hidden;
+  border-radius:6px;
+}
+
+.modal-title {
+  background-color:#428BCA;
+  border-color:#357EBD;
+  padding:6px;
+  color:#FFF;
+  text-align:left;
+}
+
+.modal-content {
+  margin-top:10px;
+  padding:10px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.modal-footer {
+  background-color:#EEE;
+  border:none;
+  position:absolute;
+  padding:10px;
+  bottom:0px;
+  right:0px;
+  width:100%;
+}
+
+.btn-cancel {
+background-color:#FFF;
+}
+
+.modal .text-warning {
+display:none;
+}
+
+#opponent-modal {
+display:none;
+}

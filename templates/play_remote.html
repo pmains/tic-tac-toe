@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{>header}}
+    <script type="text/javascript" src="/www/js/play_remote.js"></script>
+  </head>
+  <body>
+    <div id="main" class="text-center">
+      <!-- Modal for entering your player handle -->
+      <div id="player-modal" class="modal">
+        <div class="modal-title">Choose a Name</div>
+        <div class="modal-content">
+          <input type="text" id="player-name-input" />
+          <div id="name-taken" class="text-warning">Name already taken. Please choose another.</div>
+          <div id="server-error" class="text-warning">Server error. Try again.</div>
+        </div>
+        <div class="modal-footer">
+          <div class="btn btn-primary" id="ok-player-name">OK</div>
+        </div>
+      </div>
+      
+      <!-- Modal for finding opponents -->
+      <div id="opponent-modal" class="modal">
+        <div class="modal-title">Choose Opponent</div>
+        <input type="hidden" id="file-action" value="save" />
+        <div class="modal-content">
+          <select id="opponent-list"></select>
+        </div>
+        <div class="modal-footer">
+          <div class="btn btn-cancel"  id="cancel-opponent">Cancel</div>
+          <div class="btn btn-primary" id="ok-opponent">OK</div>
+        </div>
+      </div>
+
+      <!-- Modal for joining existing game -->
+      <div id="join-game-modal" class="modal">
+        <div class="modal-title">Found game</div>
+        <div class="modal-content">
+          <div id="msg"></div>
+        </div>
+        <div class="modal-footer">
+          <div class="btn btn-cancel"  id="cancel-join-game">Cancel</div>
+          <div class="btn btn-primary" id="ok-join-game">OK</div>
+        </div>
+      </div>
+    
+      {{>nav}}      
+      {{>board}}
+      <div id="reset" class="btn btn-primary menu-btn">RESET</div>
+      <div id="find-opponents" class="btn btn-primary menu-btn">FIND OPPONENTS</div>
+      <div id="find-game"      class="btn btn-primary menu-btn">FIND GAME</div>
+      <div id="marker-select">
+        Play as:
+        <span id="marker-x" class="marker active">X</span>
+        <span id="marker-o" class="marker">O</span>
+      </div>
+
+      <input type="hidden" id="player-name" name="player-name" value="" />
+      <input type="hidden" id="game-id"     name="game-id"     value="" />
+    </div>
+  </body>
+</html>
