@@ -47,6 +47,10 @@ function computer_play() {
           reset();
           return;
         }
+        // if no winner and all squares filled
+        if( $(".square:empty").length == 0 ) {
+          cats_game();
+        }
       }
     },
     data_type:"json",

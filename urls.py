@@ -53,12 +53,12 @@ urls = [
     'method': 'GET'
   },
   {
-    'path': r'^/player/(?P<player>\w+)/?$',
+    'path': r'^/player/(?P<player>[\w\s]+)/?$',
     'controller': controllers.add_player,
     'method': 'PUT'
   },
   {
-    'path': r'^/add_player/(?P<player>\w+)/?$',
+    'path': r'^/add_player/(?P<player>[\w\s]+)/?$',
     'controller': controllers.add_player,
     'method': 'GET'
   },
@@ -68,7 +68,7 @@ urls = [
     'method': 'GET'
   },
   {
-    'path': r'^/find_opponents/(?P<player>\w+)/?$',
+    'path': r'^/find_opponents/(?P<player>[\w\s]+)/?$',
     'controller': controllers.find_opponents,
     'method': 'GET'
   },
@@ -85,17 +85,17 @@ urls = [
     'method': 'GET'
   },
   {
-    'path': r'^/game/find/(?P<player>\w+)/?$',
+    'path': r'^/game/find/(?P<player>[\w\s]+)/?$',
     'controller': controllers.find_game,
     'method': 'GET'
   },
   {
-    'path': r'^/game/start/(?P<player1>\w+)/(?P<player2>\w+)/?$',
+    'path': r'^/game/start/(?P<player1>[\w\s]+)/(?P<player2>[\w\s]+)/?$',
     'controller': controllers.start_game,
     'method': 'PUT'
   },
   {
-    'path': r'^/game/turn/(?P<game_id>[\w-]+)/(?P<player>\w+)/?$',
+    'path': r'^/game/turn/(?P<game_id>[\w-]+)/(?P<player>[\w\s]+)/?$',
     'controller': controllers.my_turn,
     'method': 'GET'
   },
@@ -105,7 +105,7 @@ urls = [
     'method': 'DELETE'
   },
   {
-    'path': r'^/game/(?P<game_id>[\w-]+)/(?P<player>\w+)/?$',
+    'path': r'^/game/(?P<game_id>[\w-]+)/(?P<player>[\w\s]+)/?$',
     'controller': controllers.save_game,
     'method': 'PUT'
   },

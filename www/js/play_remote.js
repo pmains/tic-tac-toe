@@ -1,6 +1,7 @@
 MY_TURN = false;
 MY_MARKER = null;
 UPDATE_INTERVAL = null;
+INVITE_INTERVAL = null;
 
 /* Clear the board */
 function reset() {
@@ -33,10 +34,16 @@ function click_square(square) {
 
 /* Update the board on set time intervals */
 function update_interval() {
-  var refreshInterval = setInterval(function(){
+  setInterval(function(){
     update_game();
     check_outcome();
   }, 3000);
+}
+
+function invite_interval() {
+  INVITE_INTERVAL = setInterval(function(){
+    find_game();
+  }, 2000);
 }
 
 /* See if there is a winner */
@@ -138,6 +145,8 @@ function ok_player_name() {
       // Close modal
       $("#player-modal").hide();
       $("#player-name").val($("#player-name-input").val());
+      // Wait for invite
+      invite_interval();
     },
     error:function(response, status, error){
       $("#server-error").show();
@@ -177,6 +186,8 @@ function ok_opponent() {
   player1 = get_player();
   player2 = $("#opponent-list").val();
   
+  clearInterval(INVITE_INTERVAL);
+  
   // Start a new game
   $.ajax({type:"PUT",
     url:"/game/start/" + player1 + "/" + player2,
@@ -189,16 +200,17 @@ function ok_opponent() {
       MY_MARKER = 0;
       $(".marker").removeClass("active");
       $("#marker-x").addClass("active");
+      update_interval();
     },
     error:function(response, error, status) {
       console.log("failure");
       console.log("error: " + error);
       console.log("status: " + status);
+      
+      invite_interval();
     },
     data_type:"json"
   });
-
-  update_interval();
 }
 
 /* Find the current game for the local player, if one exists */
@@ -207,6 +219,16 @@ function find_game() {
   $.ajax({type:"GET",
     url:"/game/find/" + get_player(),
     success:function(response){
+      // Do nothing if null response
+      if(response == null) {
+        return;
+      }
+      
+      // Game found. Stop polling for game invites.
+      if(INVITE_INTERVAL != null) {
+        clearInterval(INVITE_INTERVAL);
+      }
+      
       // Extract game dict from response object
       var game = response['game']
 
@@ -290,7 +312,7 @@ $(document).ready(function() {
   $("#ok-player-name").bind("click", ok_player_name);
 
   // Buttons below board
-  $("#find-game").bind("click", find_game);
+  // $("#find-game").bind("click", find_game);
   $("#find-opponents").bind("click", find_opponents);
   $("#refresh").bind("click", update_game);
 });
