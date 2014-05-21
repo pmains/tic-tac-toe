@@ -85,7 +85,7 @@ def start_game(player1, player2):
 def get_game_file(game_id, mode="r"):
   '''Open a game's file and return the file handle'''
   try:
-    return open("game-%s.json" % game_id, mode)
+    return open(settings.HOME_DIR + "game-%s.json" % game_id, mode)
   except IOError:
     raise
   return None

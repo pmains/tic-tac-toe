@@ -7,7 +7,7 @@ from os import curdir, sep
 DOMAIN = "localhost"
 ADMIN_EMAILS = [ "peter.mains@gmail.com" ]
 
-HOME_DIR = curdir + sep
+HOME_DIR = "/home/pmains/Code/tic-tac-toe/"
 TEMPLATE_DIR = HOME_DIR + "templates" + sep
 STATIC_FOLDER = "www"
 STATIC_DIR = HOME_DIR + STATIC_FOLDER + sep

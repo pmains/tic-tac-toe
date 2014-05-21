@@ -3,8 +3,8 @@ Render pages to be served by WSGI-compatible server
 '''
 
 import os, sys
+sys.path.append(os.path.dirname(__file__))
 import settings
-sys.path.append(settings.HOME_DIR)
 
 from urls import urls
 import re
