@@ -305,7 +305,7 @@ $(document).ready(function() {
   $("#ok-opponent").bind("click", ok_opponent);
 
   // Join Game modal buttons
-  $("#cancel-join-game").bind("click", cancel_modal);
+  /* $("#cancel-join-game").bind("click", cancel_modal); */
   $("#ok-join-game").bind("click", ok_join_game);
 
   // Player Name modal buttons
