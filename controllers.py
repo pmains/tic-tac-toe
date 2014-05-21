@@ -94,24 +94,14 @@ def start_game(m):
   player1 = m.group("player1")
   player2 = m.group("player2")
   
-  status = OK
   result = logic.start_game(player1, player2)
+  
+  status = OK
   if not result:
     status = ERROR
   
   response_body = json.dumps(result)
   return response(status, JSON, response_body)
-
-def find_game(m):
-  '''Given a player name, find an existing game of Tic Tac Toe'''
-  player = m.group("player")
-  response_body = json.dumps(logic.find_game(player))
-  return response(OK, JSON, response_body)
-
-def get_games(m):
-  '''Find existing games of Tic Tac Toe'''
-  response_body = json.dumps(logic.get_games())
-  return response(OK, JSON, response_body)
 
 def end_game(m):
   '''Terminate a game'''
@@ -124,3 +114,45 @@ def end_game(m):
   
   response_body = json.dumps(result)  
   return response(status, JSON, response_body)
+
+def save_game(m, data):
+  '''Save the board and game status'''
+  game_id = m.group("game_id")
+  player = m.group("player")
+  print "data: %s " % data
+  result = logic.save_game(game_id, player, json.loads(data))
+
+  status = OK
+  if not result:
+    status = ERROR
+
+  response_body = json.dumps(result)
+  return response(status, JSON, response_body)
+
+def get_game(m):
+  '''Find existing games of Tic Tac Toe'''
+  game_id = m.group("game_id")
+  response_body = json.dumps(logic.get_game(game_id))
+  return response(OK, JSON, response_body)
+
+def get_games(m):
+  '''Find existing games of Tic Tac Toe'''
+  response_body = json.dumps(logic.get_games())
+  return response(OK, JSON, response_body)
+
+def my_turn(m):
+  '''Determine if it is the current player's turn'''
+  game_id = m.group("game_id")
+  player = m.group("player")
+  response_body = json.dumps(logic.my_turn(game_id, player))
+  return response(OK, JSON, response_body)
+  
+def find_game(m):
+  '''Given a player name, find an existing game of Tic Tac Toe'''
+  player = m.group("player")
+  response_body = json.dumps(logic.find_game(player))
+  return response(OK, JSON, response_body)
+
+def flush_games(m):
+  response_body = json.dumps(logic.flush_games())
+  return response(OK, JSON, response_body)

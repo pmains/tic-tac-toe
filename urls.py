@@ -75,23 +75,43 @@ urls = [
 
   # Game API mappings
   {
-    'path': r'^/game/(?P<player1>\w+)/(?P<player2>\w+)/?$',
-    'controller': controllers.start_game,
-    'method': 'PUT'
+    'path': r'^/game/?$',
+    'controller': controllers.get_games,
+    'method': 'GET'
   },
   {
-    'path': r'^/game/(?P<player>\w+)/?$',
+    'path': r'^/flush_games/?$',
+    'controller': controllers.flush_games,
+    'method': 'GET'
+  },
+  {
+    'path': r'^/game/find/(?P<player>\w+)/?$',
     'controller': controllers.find_game,
     'method': 'GET'
   },
   {
-    'path': r'^/game/?$',
-    'controller': controllers.get_games,
+    'path': r'^/game/start/(?P<player1>\w+)/(?P<player2>\w+)/?$',
+    'controller': controllers.start_game,
+    'method': 'PUT'
+  },
+  {
+    'path': r'^/game/turn/(?P<game_id>[\w-]+)/(?P<player>\w+)/?$',
+    'controller': controllers.my_turn,
     'method': 'GET'
   },
   {
     'path': r'^/game/(?P<game_id>\w+)/?$',
     'controller': controllers.end_game,
     'method': 'DELETE'
+  },
+  {
+    'path': r'^/game/(?P<game_id>[\w-]+)/(?P<player>\w+)/?$',
+    'controller': controllers.save_game,
+    'method': 'PUT'
+  },
+  {
+    'path': r'^/game/(?P<game_id>[\w-]+)/?$',
+    'controller': controllers.get_game,
+    'method': 'GET'
   }
 ]

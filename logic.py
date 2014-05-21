@@ -8,6 +8,7 @@ from copy import deepcopy
 import json
 import settings
 import uuid
+import os
 
 PLAYERS_FILE = settings.HOME_DIR + "players.json"
 PLAYERS_FILE_LOCKED = False
@@ -60,9 +61,13 @@ def start_game(player1, player2):
 
   # Save server-side game file
   try:
-    game = open(game_id + ".json", "w+")
-    game_board = [ ["", "", ""], ["", "", ""], ["", "", ""]]
-    game.write(json.dumps(game_board))
+    game = get_game_file(game_id, "w+")
+    board = [ ["", "", ""], ["", "", ""], ["", "", ""] ]
+    data = {
+      "board": board,
+      "turn": player1
+    }
+    game.write(json.dumps(data))
     game.close()
   except IOError:
     print "unable to save game %s" % game_id
@@ -76,6 +81,64 @@ def start_game(player1, player2):
   # Unlock files
   unlock_players()
   return game_id
+
+def get_game_file(game_id, mode="r"):
+  '''Open a game's file and return the file handle'''
+  try:
+    return open("game-%s.json" % game_id, mode)
+  except IOError:
+    raise
+  return None
+
+def get_game(game_id):
+  '''Return the data contained in a game's file'''
+  try:
+    game = get_game_file(game_id, "r")
+    game_data = json.loads(game.read())
+  except IOError:
+    game.close()
+    return None
+  
+  game.close()
+  return game_data
+
+def save_game(game_id, player, board):
+  '''Save game state'''
+  # No lock is needed, since only one user can play at a time
+  games = get_games() # Information about all current games
+
+  # Do not let other players save the game status
+  if games[game_id]['player1'] != player and games[game_id]['player2'] != player:
+    return False
+  
+  game_data = get_game(game_id) # Data for current game
+  game_data['board'] = board
+  
+  # Find whose turn is next by finding which player is not the current player
+  opponent = games[game_id]['player1']
+  if opponent == player:
+    opponent = games[game_id]['player2']
+  game_data['turn'] = opponent
+  
+  # Write the new game data to the game file
+  try:
+    game = get_game_file(game_id, "w")
+    game.write( json.dumps(game_data) )
+  except IOError:
+    # Make sure that the game file is closed no matter what
+    game.close()
+    return False
+  
+  # Close the game file and report success
+  game.close()
+  return True
+
+def my_turn(game_id, player):
+  '''Determine if it is the given player's turn'''
+  game = get_game(game_id)
+  if game['turn'] == player:
+    return True
+  return False
 
 def find_game(player):
   '''Find active game of which player is a member'''
@@ -133,6 +196,23 @@ def save_games(games):
     return None
 
   return True
+
+def flush_games():
+  '''Delete all existing games'''
+  # find all games
+  try:
+    f = open(GAMES_FILE)
+    games = json.loads(f.read())
+    for game_id in games:
+      game_file_name = "game-%s.json" % game_id
+      if os.path.isfile(game_file_name):
+        os.remove(game_file_name)
+    f.close()
+  except IOError:
+    f.close()
+    return False
+  
+  return save_games({})
 
 def add_player(player):
   '''Add new player to the list of eligible players'''
