@@ -8,8 +8,8 @@ https://github.com/defunkt/pystache
 Operational demo running at pmains.ath.cx:85.
 
 To reset all data, use the following two URLs:
-http://pmains.ath.cx:85/flush_players/
-http://pmains.ath.cx:85/flush_games/
+- http://pmains.ath.cx:85/flush_players/
+- http://pmains.ath.cx:85/flush_games/
 
 Demonstrates familiarity with AJAX, REST and Python WSGI programming.
 
