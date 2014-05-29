@@ -5,7 +5,7 @@ Depends on Pystache (Python implementation of the Mustache Templating Language).
 
 https://github.com/defunkt/pystache
 
-Operational demo running at pmains.ath.cx:85.
+Operational demo running at http://pmains.ath.cx:85.
 
 To reset all data, use the following two URLs:
 - http://pmains.ath.cx:85/flush_players/
